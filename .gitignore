@@ -10,3 +10,5 @@ db/*.db
 .streamlit/
 
 *.pdf
+
+db/*.db

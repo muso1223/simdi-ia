@@ -1,3 +1,9 @@
+from db.init_db import init_db
+from db.crear_admin import crear_admin
+
+init_db()
+crear_admin()
+
 import sys
 import base64
 import os
