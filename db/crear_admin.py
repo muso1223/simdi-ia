@@ -6,7 +6,7 @@ def crear_admin():
 
     cursor.execute(
         "SELECT * FROM usuarios WHERE documento=?",
-        ("123456",)
+        ("1001",)
     )
 
     admin = cursor.fetchone()
@@ -18,11 +18,11 @@ def crear_admin():
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             "Admin Principal",
-            "123456",
+            "1001",
             "ADMIN001",
             "",
             "admin@demo.com",
-            "1234",
+            "12345",
             "admin",
             None,
             1

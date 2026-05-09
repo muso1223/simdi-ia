@@ -1,14 +1,13 @@
-from db.init_db import init_db
-from db.crear_admin import crear_admin
-
-init_db()
-crear_admin()
-
 import sys
 import base64
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from db.init_db import init_db
+from db.crear_admin import crear_admin
+
+init_db()
+crear_admin()
 
 import streamlit as st
 
