@@ -108,31 +108,31 @@ def medico_panel(user):
 
         if not nombre.strip():
             st.warning("El nombre es obligatorio")
-            return
+            st.stop()
 
         if len(nombre.strip()) < 3:
             st.warning("Nombre inválido")
-            return
+            st.stop()
 
         if not documento.strip():
             st.warning("El documento es obligatorio")
-            return
+            st.stop()
 
         if not documento.isdigit():
             st.warning("El documento debe ser numérico")
-            return
+            st.stop()
 
         if edad <= 0 or edad > 120:
             st.warning("Edad inválida")
-            return
+            st.stop()
 
         if peso <= 0 or peso > 400:
             st.warning("Peso inválido")
-            return
+            st.stop()
 
         if estatura <= 0 or estatura > 3:
             st.warning("Estatura inválida")
-            return
+            st.stop()
 
         if correo:
 
@@ -141,166 +141,75 @@ def medico_panel(user):
 
             except EmailNotValidError:
                 st.warning("Correo inválido")
-                return
+                st.stop()
 
-        elif not st.session_state.sintomas:
+        if not st.session_state.sintomas:
             st.warning("Seleccione síntomas")
+            st.stop()
 
-        else:
+        # =========================
+        # DEBUG
+        # =========================
+        st.write("Entró al procesamiento")
 
-            with st.spinner("Procesando..."):
+        with st.spinner("Procesando..."):
 
-                try:
+            try:
 
-                    diagnostico = predecir_enfermedad(st.session_state.sintomas)
+                st.write("Generando diagnóstico")
 
-                    examenes_dict = {
-                        enf: obtener_examenes(enf)
-                        for enf, _ in diagnostico
-                    }
+                diagnostico = predecir_enfermedad(st.session_state.sintomas)
 
-                    ruta_csv = os.path.join(BASE_DIR, "data/reportes/historial.csv")
-                    os.makedirs(os.path.dirname(ruta_csv), exist_ok=True)
+                st.write(diagnostico)
 
-                    mensaje_final = ""
+                examenes_dict = {
+                    enf: obtener_examenes(enf)
+                    for enf, _ in diagnostico
+                }
 
-                    # =========================
-                    # EDICIÓN
-                    # =========================
-                    if "reporte_editar" in st.session_state and os.path.exists(ruta_csv):
+                st.write("Generando PDF")
 
-                        df = pd.read_csv(ruta_csv, dtype=str)
-                        idx = st.session_state.reporte_editar["index"]
+                fecha = datetime.now().strftime("%Y-%m-%d %H:%M")
 
-                        fecha_original = df.loc[idx, "fecha"]
-                        fecha_edicion = datetime.now().strftime("%Y-%m-%d %H:%M")
+                datos = {
+                    "nombre": nombre,
+                    "documento": str(documento),
+                    "edad": edad,
+                    "peso": peso,
+                    "estatura": estatura,
+                    "genero": genero,
+                    "medico_nombre": user[1],
+                    "medico_documento": str(user[2]),
+                    "fecha": fecha,
+                    "fecha_edicion": ""
+                }
 
-                        datos = {
-                            "nombre": nombre,
-                            "documento": str(documento),
-                            "edad": edad,
-                            "peso": peso,
-                            "estatura": estatura,
-                            "genero": genero,
-                            "medico_nombre": user[1],
-                            "medico_documento": str(user[2]),
-                            "fecha": fecha_original,
-                            "fecha_edicion": fecha_edicion
-                        }
+                ruta_pdf = generar_pdf(datos, diagnostico, examenes_dict)
 
-                        ruta_pdf = os.path.abspath(
-                            generar_pdf(datos, diagnostico, examenes_dict)
+                st.write(f"PDF generado: {ruta_pdf}")
+
+                if ruta_pdf and os.path.exists(ruta_pdf):
+
+                    st.success("PDF generado correctamente")
+
+                    with open(ruta_pdf, "rb") as f:
+
+                        st.download_button(
+                            "Descargar reporte",
+                            f,
+                            file_name=os.path.basename(ruta_pdf),
+                            mime="application/pdf"
                         )
 
-                        ruta_vieja = df.loc[idx, "ruta_pdf"]
+                else:
+                    st.error("No se encontró el PDF")
 
-                        if os.path.exists(ruta_vieja):
-                            os.remove(ruta_vieja)
+            except Exception as e:
 
-                        df.loc[idx, "nombre"] = nombre
-                        df.loc[idx, "documento"] = str(documento)
-                        df.loc[idx, "edad"] = str(edad)
-                        df.loc[idx, "peso"] = str(peso)
-                        df.loc[idx, "estatura"] = str(estatura)
-                        df.loc[idx, "genero"] = genero
-                        df.loc[idx, "diagnostico"] = "; ".join(
-                            [f"{e} ({p:.2f})" for e, p in diagnostico]
-                        )
-                        df.loc[idx, "ruta_pdf"] = ruta_pdf
-                        df.loc[idx, "fecha_edicion"] = fecha_edicion
+                import traceback
 
-                        df.to_csv(ruta_csv, index=False)
-
-                        del st.session_state.reporte_editar
-
-                        mensaje_final = "Reporte editado correctamente"
-
-                    # =========================
-                    # NUEVO
-                    # =========================
-                    else:
-
-                        fecha = datetime.now().strftime("%Y-%m-%d %H:%M")
-
-                        datos = {
-                            "nombre": nombre,
-                            "documento": str(documento),
-                            "edad": edad,
-                            "peso": peso,
-                            "estatura": estatura,
-                            "genero": genero,
-                            "medico_nombre": user[1],
-                            "medico_documento": str(user[2]),
-                            "fecha": fecha,
-                            "fecha_edicion": ""
-                        }
-
-                        ruta_pdf = os.path.abspath(
-                            generar_pdf(datos, diagnostico, examenes_dict)
-                        )
-
-                        file_exists = os.path.isfile(ruta_csv)
-
-                        with open(ruta_csv, "a", newline="", encoding="utf-8") as f:
-
-                            writer = csv.writer(f)
-
-                            if not file_exists:
-                                writer.writerow([
-                                    "nombre", "documento", "edad", "peso",
-                                    "estatura", "genero",
-                                    "medico_nombre", "medico_documento",
-                                    "fecha", "fecha_edicion",
-                                    "diagnostico", "ruta_pdf"
-                                ])
-
-                            writer.writerow([
-                                nombre, str(documento), edad, peso,
-                                estatura, genero,
-                                user[1], str(user[2]),
-                                fecha, "",
-                                "; ".join([f"{e} ({p:.2f})" for e, p in diagnostico]),
-                                ruta_pdf
-                            ])
-
-                        mensaje_final = "Reporte generado y guardado"
-
-                    # =========================
-                    # CORREO
-                    # =========================
-                    if correo:
-
-                        try:
-                            enviar_correo(correo, ruta_pdf)
-                            mensaje_final += " y enviado al correo"
-
-                        except Exception:
-                            mensaje_final += " (error al enviar correo)"
-
-                    st.success(mensaje_final + " ✅")
-
-                    # =========================
-                    # DESCARGA
-                    # =========================
-                    if os.path.exists(ruta_pdf):
-
-                        with open(ruta_pdf, "rb") as f:
-
-                            st.download_button(
-                                "Descargar reporte",
-                                f,
-                                file_name=os.path.basename(ruta_pdf)
-                            )
-
-                    else:
-                        st.error("No se encontró el PDF")
-
-                except Exception as e:
-
-                    import traceback
-
-                    st.error(f"ERROR: {e}")
-                    st.code(traceback.format_exc())
+                st.error(f"ERROR: {e}")
+                st.code(traceback.format_exc())
 
     # =========================
     # BOTÓN PERMANENTE PARA VER REPORTES
