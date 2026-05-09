@@ -76,7 +76,7 @@ def mostrar_header(user=None):
             height:90px;
             border-radius:50%;
             object-fit:cover;
-            border:3px solid #4CAF50;
+            border:3px solid #605170;
         ">
         """
 
@@ -89,7 +89,7 @@ def mostrar_header(user=None):
             height:90px;
             border-radius:50%;
             object-fit:cover;
-            border:3px solid #4CAF50;
+            border:3px solid #605170;
         ">
         """
 
