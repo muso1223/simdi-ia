@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+
+reportes/
+uploads/
+db/*.db
+
+.env
+.streamlit/
+
+*.pdf

@@ -1,0 +1,83 @@
+enfermedad,examen
+Fungal infection,Examen micológico
+Fungal infection,Cultivo de hongos
+Allergy,Prueba de alergias
+Allergy,IgE en sangre
+GERD,Endoscopia digestiva alta
+GERD,pH-metría esofágica
+Chronic cholestasis,Pruebas de función hepática
+Chronic cholestasis,Ecografía abdominal
+Drug Reaction,Hemograma
+Drug Reaction,Pruebas hepáticas
+Peptic ulcer diseae,Endoscopia digestiva
+Peptic ulcer diseae,Prueba Helicobacter pylori
+AIDS,Prueba VIH
+AIDS,Recuento CD4
+Diabetes,Glucosa en sangre
+Diabetes,Hemoglobina glicosilada
+Gastroenteritis,Coprológico
+Gastroenteritis,Hemograma
+Bronchial Asthma,Espirometría
+Bronchial Asthma,Radiografía de tórax
+Hypertension,Presión arterial
+Hypertension,Electrocardiograma
+Migraine,Resonancia magnética
+Migraine,TAC cerebral
+Cervical spondylosis,Radiografía cervical
+Cervical spondylosis,Resonancia magnética
+Paralysis (brain hemorrhage),TAC cerebral
+Paralysis (brain hemorrhage),Resonancia magnética
+Jaundice,Pruebas hepáticas
+Jaundice,Bilirrubina
+Malaria,Gota gruesa
+Malaria,Prueba rápida malaria
+Chicken pox,Evaluación clínica
+Chicken pox,Hemograma
+Dengue,Hemograma
+Dengue,Antígeno NS1
+Typhoid,Cultivo de sangre
+Typhoid,Widal
+hepatitis A,Pruebas hepáticas
+hepatitis A,Anticuerpos IgM
+Hepatitis B,HBsAg
+Hepatitis B,Carga viral
+Hepatitis C,Anticuerpos HCV
+Hepatitis C,Carga viral
+Hepatitis D,Prueba HDV
+Hepatitis D,Función hepática
+Hepatitis E,Anticuerpos HEV
+Hepatitis E,Función hepática
+Alcoholic hepatitis,Pruebas hepáticas
+Alcoholic hepatitis,GGT
+Tuberculosis,Baciloscopia
+Tuberculosis,Radiografía de tórax
+Common Cold,Evaluación clínica
+Common Cold,Hemograma
+Pneumonia,Radiografía de tórax
+Pneumonia,Hemograma
+Dimorphic hemmorhoids(piles),Inspección rectal
+Dimorphic hemmorhoids(piles),Colonoscopia
+Heart attack,Electrocardiograma
+Heart attack,Troponinas
+Varicose veins,Eco Doppler
+Varicose veins,Inspección clínica
+Hypothyroidism,TSH
+Hypothyroidism,T4 libre
+Hyperthyroidism,TSH
+Hyperthyroidism,T3 y T4
+Hypoglycemia,Glucosa en sangre
+Hypoglycemia,Insulina
+Osteoarthristis,Radiografía
+Osteoarthristis,Resonancia magnética
+Arthritis,Factor reumatoide
+Arthritis,Proteína C reactiva
+(vertigo) Paroymsal Positional Vertigo,Prueba Dix-Hallpike
+(vertigo) Paroymsal Positional Vertigo,Evaluación clínica
+Acne,Evaluación dermatológica
+Acne,Hormonas
+Urinary tract infection,Uroanálisis
+Urinary tract infection,Urocultivo
+Psoriasis,Biopsia de piel
+Psoriasis,Evaluación dermatológica
+Impetigo,Cultivo bacteriano
+Impetigo,Evaluación clínica
