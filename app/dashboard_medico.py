@@ -202,8 +202,57 @@ def medico_panel(user):
 
                     st.success("PDF generado correctamente")
 
-                    with open(ruta_pdf, "rb") as f:
+                    # =========================
+                    # GUARDAR EN CSV
+                    # =========================
+                    ruta_csv = os.path.join(BASE_DIR, "data/reportes/historial.csv")
+                    os.makedirs(os.path.dirname(ruta_csv), exist_ok=True)
 
+                    file_exists = os.path.isfile(ruta_csv)
+
+                    with open(ruta_csv, "a", newline="", encoding="utf-8") as f:
+                        writer = csv.writer(f)
+
+                        if not file_exists:
+                            writer.writerow([
+                                "nombre", "documento", "edad", "peso",
+                                "estatura", "genero",
+                                "medico_nombre", "medico_documento",
+                                "fecha", "fecha_edicion",
+                                "diagnostico", "ruta_pdf"
+                            ])
+
+                        writer.writerow([
+                            nombre,
+                            str(documento),
+                            edad,
+                            peso,
+                            estatura,
+                            genero,
+                            user[1],
+                            str(user[2]),
+                            fecha,
+                            "",
+                            "; ".join([f"{e} ({p:.2f})" for e, p in diagnostico]),
+                            ruta_pdf
+                        ])
+
+                    st.write("DEBUG: Guardado en historial.csv")
+
+                    # =========================
+                    # ENVÍO DE CORREO
+                    # =========================
+                    if correo:
+                        try:
+                            enviar_correo(correo, ruta_pdf)
+                            st.success("Correo enviado correctamente")
+                        except Exception as correo_error:
+                            st.error(f"Error enviando correo: {correo_error}")
+
+                    # =========================
+                    # DESCARGA
+                    # =========================
+                    with open(ruta_pdf, "rb") as f:
                         st.download_button(
                             "Descargar reporte",
                             f,
