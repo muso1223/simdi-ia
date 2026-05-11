@@ -124,18 +124,15 @@ def medico_panel(user):
 
         if edad <= 0 or edad > 120:
             st.warning("Edad inválida")
-            return
             st.stop()
 
         if peso <= 0 or peso > 400:
             st.warning("Peso inválido")
-            return
-        st.stop()
+            st.stop()
 
         if estatura <= 0 or estatura > 3:
             st.warning("Estatura inválida")
-            return
-        st.stop()
+            st.stop()
 
         st.write("DEBUG correo:", correo)
 
@@ -146,12 +143,12 @@ def medico_panel(user):
 
             except EmailNotValidError:
                 st.warning("Correo inválido")
-                return
+                st.stop()
 
         # Validar síntomas
         if not st.session_state.sintomas:
             st.warning("Seleccione síntomas")
-            return
+            st.stop()
             
 
         # =========================
