@@ -270,8 +270,7 @@ def medico_panel(user):
                         ])
 
                     mensaje_final = "Reporte generado y guardado"
-                    st.write("Ruta del PDF:", ruta_pdf)
-                    st.write("Existe:", os.path.exists(ruta_pdf))
+                    
 
                 # =========================
                 # CORREO
@@ -294,6 +293,9 @@ def medico_panel(user):
                             file_name=os.path.basename(ruta_pdf),
                             mime="application/pdf"
                         )
+                
+                st.write("Ruta del PDF:", ruta_pdf)
+                st.write("Existe:", os.path.exists(ruta_pdf))
 
             except Exception as e:
                 import traceback
