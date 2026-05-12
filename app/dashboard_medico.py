@@ -270,6 +270,8 @@ def medico_panel(user):
                         ])
 
                     mensaje_final = "Reporte generado y guardado"
+                    st.write("Ruta del PDF:", ruta_pdf)
+                    st.write("Existe:", os.path.exists(ruta_pdf))
 
                 # =========================
                 # CORREO
