@@ -215,6 +215,8 @@ def medico_panel(user):
                     del st.session_state.reporte_editar
 
                     mensaje_final = "Reporte editado correctamente"
+                    del st.session_state.reporte_editar
+                    st.rerun()
 
                 # =========================
                 # NUEVO
@@ -283,6 +285,7 @@ def medico_panel(user):
                         mensaje_final += f" (error al enviar correo: {correo_error})"
 
                 st.success(mensaje_final + " ✅")
+                st.session_state.sintomas = []
 
                 # DESCARGA
                 if os.path.exists(ruta_pdf):
@@ -294,7 +297,6 @@ def medico_panel(user):
                             mime="application/pdf"
                         )
                 
-
 
             except Exception as e:
                 import traceback
