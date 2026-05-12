@@ -302,28 +302,28 @@ def medico_panel(user):
                 st.error(f"ERROR: {e}")
                 st.code(traceback.format_exc())
 
-        st.divider()
-        st.subheader("Administración de archivos")
+    st.divider()
+    st.subheader("Administración de archivos")
 
-        ruta_reportes = os.path.join(BASE_DIR, "reportes")
+    ruta_reportes = os.path.join(BASE_DIR, "reportes")
 
-        if st.button("Eliminar reportes antiguos"):
+    if st.button("Eliminar reportes antiguos"):
 
-            if os.path.exists(ruta_reportes):
+        if os.path.exists(ruta_reportes):
 
-                archivos_eliminados = 0
+            archivos_eliminados = 0
 
-                for archivo in os.listdir(ruta_reportes):
-                    ruta_archivo = os.path.join(ruta_reportes, archivo)
+            for archivo in os.listdir(ruta_reportes):
+                ruta_archivo = os.path.join(ruta_reportes, archivo)
 
-                    if os.path.isfile(ruta_archivo):
-                        os.remove(ruta_archivo)
-                        archivos_eliminados += 1
+                if os.path.isfile(ruta_archivo):
+                    os.remove(ruta_archivo)
+                    archivos_eliminados += 1
 
-                st.success(f"{archivos_eliminados} reportes eliminados correctamente")
+            st.success(f"{archivos_eliminados} reportes eliminados correctamente")
 
-            else:
-                st.warning("No existe la carpeta de reportes")
+        else:
+            st.warning("No existe la carpeta de reportes")
 
     # =========================
     # VER REPORTES
