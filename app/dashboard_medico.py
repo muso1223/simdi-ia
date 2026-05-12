@@ -294,8 +294,7 @@ def medico_panel(user):
                             mime="application/pdf"
                         )
                 
-                st.write("Ruta del PDF:", ruta_pdf)
-                st.write("Existe:", os.path.exists(ruta_pdf))
+
 
             except Exception as e:
                 import traceback
